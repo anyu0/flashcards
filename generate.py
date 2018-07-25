@@ -72,13 +72,9 @@ def parse_args(args):
         usage()
         sys.exit()
 
-# make two decks from a processed file
 def read_decks(args):
     if len(args)==1:
-        format = "dictionary"
-    if format == "dictionary":
-        filename = "output_files/"+args[0]
-        f = open(filename)
+        f = open(args)
         try:
             st = f.read()
             deck = eval(st)
@@ -86,49 +82,44 @@ def read_decks(args):
             print("flashcard: dictionary file contains errors")
             sys.exit()
         decks.append(list(deck.keys()))
-        decks.append(list(deck.values()))  # deck[0] is key/hint and deck[1] is value/answer
+        decks.append(list(deck.values()))
+        # deck[0] = key/hint && deck[1] = value/answer
         return len(deck.keys())
 
 def flashcards(unused):
-    t = Color()
-    if opts['nocolor']:
-        t.disable()
     while len(unused) != 0:
         c = unused[0]
         if opts['shuffle']:
             c = random.choice(unused)
-
-        side = 0
+        flip = False
         if opts['invert']:
-            side = 1
-
+            flip = True
         if opts['alternate']:
-            side = random.choice([0, 1])
-
+            flip = random.choice([0, 1])
         try:
-            if side == 0:
-                print(t.c1+"Q:"+t.end,decks[0][c])
-                ans = input(t.c2+"A: "+t.end)
-                if ans == '--':
-                    sys.exit()
-                print(t.c3+"    "+str(decks[1][c])+t.end)
-            if side == 1:
-                print(t.c1+"Q:"+t.end,decks[1][c])
-                ans = input(t.c2+"A: "+t.end)
-                if ans == '--':
-                    sys.exit()
-                print(t.c3+"    "+str(decks[0][c])+t.end)
+            popcards(flip)
         except (KeyboardInterrupt, EOFError):
             sys.exit()
-
         unused.remove(c)
+
+def popcards(flip):
+    t = Color()
+    if opts['nocolor']:
+        t.disable()
+    hint = int(flip)
+    ans = int(not flip)
+    print(t.c1+"Q:"+t.end+decks[hint][c])
+    ans = input(t.c2+"A: "+t.end)
+    if ans == '--':
+        sys.exit()
+    print(t.c3+"    "+str(decks[ans][c])+t.end)
 
 def main(args):
     t = Color()
     parse_args(args)
-    words = read_decks(files)
-    print(t.c3+"There are {} words in the deck.".format(str(words))+t.end)
-    unused = list(range(0, words))
+    num_words = read_decks(files)
+    print(t.c3+"There are {} words in the deck.".format(str(num_words))+t.end)
+    unused = list(range(0, num_words))
     flashcards(unused)
 
 if __name__ == '__main__':
