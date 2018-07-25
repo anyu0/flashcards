@@ -1,25 +1,3 @@
-# read plain txt file (f1) and generate a dictionary (f2)
-import os
-import sys
-
-dic={}
-files=[]
-
-def readable(path):
-    return os.access(path, os.R_OK)
-
-def parse_args(args):
-    end_args = False
-    var_arg  = None
-    for a in args:
-        files.append(a)
-
-def check_read(files):
-    for f in files:
-        if not readable(f):
-            print("mkdic: " + f + " is not readable.")
-            sys.exit(1)
-
 def mkdic(f1,f2):
     f=open(f1)
     f.readline()
@@ -32,21 +10,20 @@ def mkdic(f1,f2):
         for i in range(len(w)):
             w[i]=w[i].lstrip()
 
-        dic[w[1]] = w[0]
+        dic[w[0]] = w[1]
     f.close()
 
     k = open(f2,'w')
     k.write('{\n')
     for x in dic.keys():
         k.write('"{}":"{}",\n'.format(x,dic[x]))
-        
+
     k.write('}\n')
     k.close()
     return len(dic.keys())
 
 def main(args):
     parse_args(args)
-    #check_read(files)
     mkdic(files[0],files[1])
 
 if __name__ == '__main__':

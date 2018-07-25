@@ -1,27 +1,30 @@
-# read plain txt file (f1) and generate a dictionary (f2)
+# read plain txt file (f1) and generate a         dictionary (f2)
+
 import os
 import sys
 
 dic={}
 files=[]
+# Default input dir: ./unprocessed
+dir_in = "./unprocessed/"
+# Default output dir: ./processed
+dir_out = "./processed/"
 
+'''
 def readable(path):
     return os.access(path, os.R_OK)
+'''
 
 def parse_args(args):
-    end_args = False
-    var_arg  = None
+    #end_args = False
+    #var_arg  = None
     for a in args:
         files.append(a)
 
-def check_read(files):
-    for f in files:
-        if not readable(f):
-            print("mkdic: " + f + " is not readable.")
-            sys.exit(1)
-
-def mkdic(f1,f2):
-    f=open(f1)
+def mkdict(f1):
+    f_in = dir_in + f1
+    f_out = dir_out + f1 + "_dict"
+    f=open(f_in)
     f.readline()
     for l in f:
         l=l.strip()
@@ -35,19 +38,18 @@ def mkdic(f1,f2):
         dic[w[0]] = w[1]
     f.close()
 
-    k = open(f2,'w')
+    k = open(f_out,'w')
     k.write('{\n')
     for x in dic.keys():
         k.write('"{}":"{}",\n'.format(x,dic[x]))
-        
+
     k.write('}\n')
     k.close()
     return len(dic.keys())
 
 def main(args):
     parse_args(args)
-    #check_read(files)
-    mkdic(files[0],files[1])
+    mkdict(files[0])
 
 if __name__ == '__main__':
     main(sys.argv[1:])
