@@ -23,7 +23,6 @@ class Color:
         self.c3  = ''
         self.end = ' '
 
-decks = []
 files = []
 
 def usage():
@@ -72,55 +71,53 @@ def parse_args(args):
         usage()
         sys.exit()
 
-def read_decks(args):
+def read_deck(args):
     if len(args)==1:
-        f = open(args)
+        f = open(args[0])
         try:
             st = f.read()
-            deck = eval(st)
+            dictionary = eval(st)
         except:
             print("flashcard: dictionary file contains errors")
             sys.exit()
-        decks.append(list(deck.keys()))
-        decks.append(list(deck.values()))
-        # deck[0] = key/hint && deck[1] = value/answer
-        return len(deck.keys())
+        return len(dictionary.keys())
 
 def flashcards(unused):
     while len(unused) != 0:
-        c = unused[0]
+        nxt = unused[0]
         if opts['shuffle']:
-            c = random.choice(unused)
+            nxt = random.choice(unused)
         flip = False
         if opts['invert']:
             flip = True
         if opts['alternate']:
             flip = random.choice([0, 1])
         try:
-            popcards(flip)
+            popcards(nxt,flip)
         except (KeyboardInterrupt, EOFError):
             sys.exit()
-        unused.remove(c)
+        unused.remove(nxt)
 
-def popcards(flip):
+def popcards(nxt,flip):
     t = Color()
     if opts['nocolor']:
         t.disable()
-    hint = int(flip)
-    ans = int(not flip)
-    print(t.c1+"Q:"+t.end+decks[hint][c])
+    card = tuple(nxt,deck[nxt])
+    hint = card[int(flip)]
+    response = card[int(not flip)]
+    print(t.c1+"Q:"+t.end+ hint)
     ans = input(t.c2+"A: "+t.end)
     if ans == '--':
         sys.exit()
-    print(t.c3+"    "+str(decks[ans][c])+t.end)
+    print(t.c3+"    "+ response +t.end)
 
 def main(args):
     t = Color()
     parse_args(args)
-    num_words = read_decks(files)
+    num_words = read_deck(files)
     print(t.c3+"There are {} words in the deck.".format(str(num_words))+t.end)
-    unused = list(range(0, num_words))
-    flashcards(unused)
+    deck = list(range(dictionary.keys())
+    flashcards(deck)
 
 if __name__ == '__main__':
     main(sys.argv[1:])
