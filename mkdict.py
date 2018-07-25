@@ -24,17 +24,14 @@ def parse_args(args):
 def mkdict(f1):
     f_in = dir_in + f1
     f_out = dir_out + f1 + "_dict"
-    f=open(f_in)
-    f.readline()
+    f=open(f_in,'r')
     for l in f:
         l=l.strip()
         if len(l) == 0:
             continue
         w = l.split(";")
-
         for i in range(len(w)):
             w[i]=w[i].lstrip()
-
         dic[w[0]] = w[1]
     f.close()
 
@@ -42,7 +39,6 @@ def mkdict(f1):
     k.write('{\n')
     for x in dic.keys():
         k.write('"{}":"{}",\n'.format(x,dic[x]))
-
     k.write('}\n')
     k.close()
     return len(dic.keys())
