@@ -24,6 +24,8 @@ class Color:
         self.end = ' '
 
 files = []
+dictionary = {}
+deck = []
 
 def usage():
     print("""usage: flashcard: [-h] [-s] [-a] [-i] file1 [file2]
@@ -76,17 +78,18 @@ def read_deck(args):
         f = open(args[0])
         try:
             st = f.read()
+            global dictionary
             dictionary = eval(st)
         except:
             print("flashcard: dictionary file contains errors")
             sys.exit()
         return len(dictionary.keys())
 
-def flashcards(unused):
-    while len(unused) != 0:
-        nxt = unused[0]
+def flashcards(deck):
+    while len(deck) != 0:
+        nxt = deck[0]
         if opts['shuffle']:
-            nxt = random.choice(unused)
+            nxt = random.choice(deck)
         flip = False
         if opts['invert']:
             flip = True
@@ -96,13 +99,15 @@ def flashcards(unused):
             popcards(nxt,flip)
         except (KeyboardInterrupt, EOFError):
             sys.exit()
-        unused.remove(nxt)
+        deck.remove(nxt)
 
 def popcards(nxt,flip):
     t = Color()
+    global deck
+    global dictionary
     if opts['nocolor']:
         t.disable()
-    card = tuple(nxt,deck[nxt])
+    card = [nxt,dictionary[nxt]]
     hint = card[int(flip)]
     response = card[int(not flip)]
     print(t.c1+"Q:"+t.end+ hint)
@@ -116,7 +121,8 @@ def main(args):
     parse_args(args)
     num_words = read_deck(files)
     print(t.c3+"There are {} words in the deck.".format(str(num_words))+t.end)
-    deck = list(range(dictionary.keys())
+    global deck
+    deck = list(dictionary.keys())
     flashcards(deck)
 
 if __name__ == '__main__':
