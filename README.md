@@ -1,17 +1,36 @@
 # Flashcards
-a python program to generate flashcards from .txt files in command line
+a python program to generate flashcards in command line
+
+## Clone this repository
+
+```shell
+git clone git@github.com:anyu0/flashcards.git
+```
 
 ## Prepare a dictionary
-* Write a .txt file under the directory ./unprocessed/ in the following format
+* Go to the working directory
+
+```shell
+cd ./flashcards
+```
+
+* Make a plain text file under the ./unprocessed/directory 
+
+```shell
+vi ./unprocessed/filename
+```
+
+* It should be written in the following format
+
 ```
 hint; answer
 ...
 ```
 
-* Generate a dictionary by typing in the command line
+* Generate a dictionary by entering
 
 ```shell
-python3 mkdict ./unprocessed/filename.txt
+python3 mkdict filename
 ```
 
 ## Use an existing dictionary 
@@ -19,6 +38,14 @@ python3 mkdict ./unprocessed/filename.txt
 * Make a deck of flashcards by entering
 
 ```shell
-python3 flashcard ./processed/filename.txt
+python3 generate ./processed/FILENAME_dict.txt
 ```
+
+## (Optional) Quick move to the flashcards directory
+* append the following line in your shell config
+
+ ```shell
+ alias flashcard="cd path/to/flashcards"
+ ```
+
 
