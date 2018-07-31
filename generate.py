@@ -96,12 +96,12 @@ def flashcards(deck):
         if opts['alternate']:
             flip = random.choice([0, 1])
         try:
-            popcards(nxt,flip)
+            showcards(nxt,flip)
         except (KeyboardInterrupt, EOFError):
             sys.exit()
         deck.remove(nxt)
 
-def popcards(nxt,flip):
+def showcards(nxt,flip):
     t = Color()
     global deck
     global dictionary
@@ -111,10 +111,10 @@ def popcards(nxt,flip):
     hint = card[int(flip)]
     response = card[int(not flip)]
     print(t.c1+"Q:"+t.end+ hint)
-    ans = input(t.c2+"A: "+t.end)
+    ans = input(t.c2+"A:"+t.end)
     if ans == '--':
         sys.exit()
-    print(t.c3+"    "+ response +t.end)
+    print(t.c3+"   "+ response +t.end)
 
 def main(args):
     t = Color()
