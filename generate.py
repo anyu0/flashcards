@@ -28,12 +28,12 @@ dictionary = {}
 deck = []
 
 def usage():
-    print("""usage: flashcard: [-h] [-s] [-a] [-i] file1 [file2]
+    print("""usage: flashcard: [-h] [-s] [-a] [-n] [-i] filename
         -h    Show this help
         -s    Shuffle the deck
-        -a    Alternate the first side of the card to be shown, randomly
+        -a    Randomly show hint or answer as the prompt
         -n    No color in output
-        -i    Invert the order of sides of the card to be shown""")
+        -i    Invert hint and answer""")
 
 # Returns the number of lines in file f.
 def line_count(f):
