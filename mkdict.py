@@ -23,7 +23,7 @@ def parse_args(args):
 
 def mkdict(f1):
     f_in = dir_in + f1
-    f_out = dir_out + f1 + "_dict"
+    f_out = dir_out + f1
     f=open(f_in,'r')
     for l in f:
         l=l.strip()

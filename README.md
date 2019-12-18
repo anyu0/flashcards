@@ -30,7 +30,7 @@ hint; answer
 * Generate a dictionary by entering
 
 ```shell
-python3 mkdict filename
+python3 mkdict.py filename
 ```
 
 ## Use an existing dictionary 
@@ -38,7 +38,7 @@ python3 mkdict filename
 * Make a deck of flashcards by entering
 
 ```shell
-python3 generate ./processed/FILENAME_dict.txt
+python3 generate.py ./processed/filename
 ```
 
 ## (Optional) Quick move to the flashcards directory

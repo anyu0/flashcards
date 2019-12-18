@@ -1,0 +1,19 @@
+*NULL; segmentation fault
+memset ; void * memset ( void * ptr, int value, size_t num )
+memcpy ; void * memcpy ( void * destination, const void * source, size_t num )
+strncpy ; char * strncpy ( char * destination, const char * source, size_t num )
+strcpy ; char * strcpy ( char * destination, const char * source )
+strcat ; char * strcat ( char * destination, const char * source )
+git diff ; difference between the working copy and the staging area
+git diff --cached ; difference between the last commit and the staging area
+git log --stat --summary ; add a summary at each commit
+git log -p; see the full diff at each commit
+git log -p --color; diff w color
+the "index" ; staging area
+git checkout -- filename ; file have NOT been statged, go back to the version last committed
+git reset HEAD  filename ; unstage file
+git reset --hard HEAD ;
+git log origin.. ; see only the commits after cloning
+-p or --patch ; shows the difference (the patch output) introduced in each commit
+-2 ; show only the last two entries of log
+git format-patch --stdout origin > mywork.mbox ; save the full details of everything you did after cloning
